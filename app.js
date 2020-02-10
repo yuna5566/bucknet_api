@@ -13,7 +13,10 @@ mongoose.connect(
         useUnifiedTopology: true,
         useCreateIndex: true
     }
-);
+).then(() => console.log("Connected to DB"))
+.catch(error => {
+    console.log("DB ERROR: ", error)
+});
 
 //GET AND DECLARE ROUTES...
 const entriesRoutes = require('./api/routes/entries');
