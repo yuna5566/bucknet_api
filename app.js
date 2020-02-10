@@ -3,15 +3,14 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 mongoose.connect(
-    'mongodb+srv://user:' + 
-    process.env.MONGO_ATLAS_PW +
-    '@cluster-0-uuwvv.mongodb.net/test?retryWrites=true&w=majority',
+    process.env.MONGO_ATLAS_CONNECTION_STRING,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useCreateIndex: true
+        useCreateIndex: true,
     }
 ).then(() => console.log("Connected to DB"))
 .catch(error => {
@@ -26,8 +25,8 @@ const usersRoutes = require('./api/routes/users')
 app.use(morgan('dev'))
 
 //PARSES BODY REQUESTS TO MAKE THINGS READABLE (EXCLUDING FILES)
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 //SET API SERVER TO ALLOW CORS HEADERS
 app.use((req, res, next) => {

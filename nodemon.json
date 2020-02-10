@@ -1,6 +1,6 @@
 {
     "env": {
-        "MONGO_ATLAS_PW": "admin",
+        "MONGO_ATLAS_PW": "magicmike",
         "JWT_PRIVATE_KEY": "secret",
         "DOMAIN": "http://localhost:3000/",
         "JWT_KEY": "mykel"
