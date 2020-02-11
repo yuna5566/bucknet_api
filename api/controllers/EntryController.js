@@ -66,6 +66,8 @@ exports.create_entry = async (req, res, next) => {
 
 exports.get_entry_by_id = async (req, res, next) => {
     const id = req.params.entryId;
+    const test = req.userData;
+    console.log("USER", test);
     try {
         const data = await Entry.findById(id).exec();
         console.log(data);
@@ -82,7 +84,8 @@ exports.get_entry_by_id = async (req, res, next) => {
                 request: {
                     type: 'GET',
                     description: 'To look for all public entries',
-                    url: process.env.DOMAIN
+                    url: process.env.DOMAIN,
+                    decode: test
                 }
             });
         } else {

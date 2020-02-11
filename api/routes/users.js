@@ -7,7 +7,7 @@ const UserController = require('../controllers/UserController')
 
 router.post('/signup', UserController.user_sign_up);
 
-router.post('/login', auth, UserController.user_log_in);
+router.post('/login', UserController.user_log_in);
 
 router.delete('/:userId', auth, UserController.delete_user);
 
