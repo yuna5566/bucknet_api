@@ -148,7 +148,13 @@ exports.get_entries_by_userId = async (req, res, next) => {
                     category: entry.category,
                     date: entry.date,
                     image: entry.image,
-                    privacy: entry.privacy
+                    privacy: entry.privacy,
+                    user: entry.userId,
+                    _id: entry.id,
+                    request: {
+                        type: 'GET',
+                        url: process.env.DOMAIN + 'entry/' + entry.id
+                    }
                 }
             })
         });

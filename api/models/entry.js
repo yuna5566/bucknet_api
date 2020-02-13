@@ -8,6 +8,8 @@ const entrySchema = mongoose.Schema({
     date: {type: Date, required: true},
     image: {type: String, required: true},
     privacy: {type: String, required: true},
+    show: {type: Boolean, required: true, default: false},
+    done: {type: Boolean, required: true, default: false},
     userId: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User',
