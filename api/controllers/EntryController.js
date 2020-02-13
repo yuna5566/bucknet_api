@@ -2,7 +2,7 @@ const Entry = require('../models/entry');
 
 exports.get_entries = async (req, res, next) => {
     try {
-        const allEntries = await Entry.find().exec();
+        const allEntries = await Entry.find().populate('userId', '-password -__v').exec();
         if (allEntries.length > 0){
             const data = {
                 count: allEntries.length,
@@ -14,6 +14,7 @@ exports.get_entries = async (req, res, next) => {
                         date: entry.date,
                         image: entry.image,
                         privacy: entry.privacy,
+                        user: entry.userId,
                         _id: entry.id,
                         request: {
                             type: 'GET',
@@ -42,7 +43,8 @@ exports.create_entry = async (req, res, next) => {
         category: req.body.category,
         date: req.body.date,
         image: req.body.image,
-        privacy: req.body.privacy
+        privacy: req.body.privacy,
+        userId: req.body.userId
     });
 
     try{
@@ -66,8 +68,6 @@ exports.create_entry = async (req, res, next) => {
 
 exports.get_entry_by_id = async (req, res, next) => {
     const id = req.params.entryId;
-    const test = req.userData;
-    console.log("USER", test);
     try {
         const data = await Entry.findById(id).exec();
         console.log(data);
@@ -85,7 +85,6 @@ exports.get_entry_by_id = async (req, res, next) => {
                     type: 'GET',
                     description: 'To look for all public entries',
                     url: process.env.DOMAIN,
-                    decode: test
                 }
             });
         } else {
@@ -131,6 +130,28 @@ exports.delete_entry = async (req, res, next) => {
             entry: data,
             message: 'Entry successfully deleted...'
         })
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+}
+
+exports.get_entries_by_userId = async (req, res, next) => {
+    const user_id = req.params.userId;
+    try {
+        const userEntries = await Entry.find({userId: user_id}).exec();
+        res.status(400).json({
+            count: userEntries.length,
+            entries: userEntries.map(entry => {
+                return {
+                    name: entry.name,
+                    description: entry.description,
+                    category: entry.category,
+                    date: entry.date,
+                    image: entry.image,
+                    privacy: entry.privacy
+                }
+            })
+        });
     } catch (error) {
         res.status(500).json({ error: error });
     }

@@ -14,4 +14,6 @@ router.patch('/:entryId', auth, EntriesController.update_entry);
 
 router.delete('/:entryId', auth, EntriesController.delete_entry);
 
+router.get('/user/:userId', EntriesController.get_entries_by_userId);
+
 module.exports = router;

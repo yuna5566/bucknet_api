@@ -7,7 +7,12 @@ const entrySchema = mongoose.Schema({
     category: {type: String, required: true},
     date: {type: Date, required: true},
     image: {type: String, required: true},
-    privacy: {type: String, required: true}
+    privacy: {type: String, required: true},
+    userId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User',
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Entry', entrySchema);
