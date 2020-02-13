@@ -46,10 +46,11 @@ exports.user_log_in = async (req, res, next) => {
                 email: user.email,
                 userId: user._id,
             }, process.env.JWT_KEY, {
-                expiresIn: '2h'
+                expiresIn: '24h'
             });
             return res.status(200).json({
                 message: 'Authentication successful...',
+                id: user._id,
                 token: token
             });
         }
