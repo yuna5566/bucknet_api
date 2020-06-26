@@ -44,7 +44,13 @@ app.use((req, res, next) => {
 //SET ROUTES/MIDDLEWARES...
 app.use('/entry', entriesRoutes);
 app.use('/user', usersRoutes);
-
+app.use('/intercom', (req, res) => {
+    try {
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({ error: error });
+    }
+});
 
 
 //For error handlings. When no routes have been detected...
